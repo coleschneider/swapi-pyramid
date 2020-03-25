@@ -7,7 +7,7 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['test_api_me 1'] = {
+snapshots['test_all_people 1'] = {
     'data': {
         'allPeople': {
             'edges': [
@@ -531,6 +531,21 @@ snapshots['test_api_me 1'] = {
                     'node': {
                         'id': 'UGVvcGxlTm9kZToxNzQ=',
                         'name': 'Padmé Amidala'
+                    }
+                }
+            ]
+        }
+    }
+}
+
+snapshots['test_all_people_filter 1'] = {
+    'data': {
+        'allPeople': {
+            'edges': [
+                {
+                    'node': {
+                        'id': 'UGVvcGxlTm9kZTo5MQ==',
+                        'name': 'Darth Vader'
                     }
                 }
             ]

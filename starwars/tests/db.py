@@ -24,32 +24,9 @@ def usage(argv):
     sys.exit(1)
 
 db_uri = 'postgresql:///starwars'
-engine = create_engine(db_uri, convert_unicode=True)
+engine = create_engine(db_uri)
 Base.metadata.bind = engine
 
 
 db_session = scoped_session(sessionmaker(bind=engine, expire_on_commit=False))
 Base.query = db_session.query_property()  # Used by graphql to execute queries
-
-# def setup_db():
-    
-    
-#     # settings is a key, value pair of things set in development.ini
-    
-    
-
-#     # Make the database with schema and default data
-#     with transaction.manager:
-#         print('           *** Start Setup ***            ')
-#         print('           *** Creating Fixture metadata ***            ')
-#         Base.metadata.create_all()
-#         print('     ******** Loading Data *********      ')
-#         load_swapi_data(db_session)
-#         db_session.commit()
-#         transaction.commit()
-        
-#         print('   ******* Set data relation *********    ')
-#         set_rel_swapi_data(db_session)
-#         db_session.commit()
-#         transaction.commit()
-#         print('************ Setup Finished **************')

@@ -4,10 +4,10 @@ from starwars.models import (
     ModelFilm, ModelPeople, ModelPlanet,
     ModelSpecies, ModelVehicle, ModelStarship,
 )
-from graphene import Node
 
 import graphene
 from graphene import relay
+
 from graphene_sqlalchemy_filter import FilterableConnectionField, FilterSet
 
 from graphene_sqlalchemy import  SQLAlchemyObjectType
@@ -26,7 +26,7 @@ class Connection(graphene.Connection):
 class PeopleNode(SQLAlchemyObjectType):
     class Meta:
         model = ModelPeople
-        interfaces = (Node,)
+        interfaces = (graphene.Node,)
         connection_field_factory = ConnectionFilter.factory
 
 class PeopleConnection(Connection):
@@ -47,7 +47,7 @@ class PlanetNode(SQLAlchemyObjectType):
 
     class Meta:
         model = ModelPlanet
-        interfaces = (Node,)
+        interfaces = (graphene.Node,)
         connection_field_factory = ConnectionFilter.factory
 
 class PlanetConnection(Connection):
@@ -74,7 +74,7 @@ class SpecieNode(SQLAlchemyObjectType):
 
     class Meta:
         model = ModelSpecies
-        interfaces = (Node,)
+        interfaces = (graphene.Node,)
         connection_field_factory = ConnectionFilter.factory
 class SpeciesConnection(Connection):
     class Meta:
@@ -88,7 +88,7 @@ class FilmNode(SQLAlchemyObjectType):
         return [c.strip() for c in self.producer.split(',')]
     class Meta:
         model = ModelFilm
-        interfaces = (Node,)
+        interfaces = (graphene.Node,)
         connection_field_factory = ConnectionFilter.factory
 class FilmConnection(Connection):
     class Meta:
@@ -101,7 +101,7 @@ class VehicleNode(SQLAlchemyObjectType):
         return [c.strip() for c in self.manufacturer.split(',')]
     class Meta:
         model = ModelVehicle
-        interfaces = (Node,)
+        interfaces = (graphene.Node,)
         connection_field_factory = ConnectionFilter.factory
 class VehicleConnection(Connection):
     class Meta:
@@ -121,7 +121,7 @@ class StarshipNode(SQLAlchemyObjectType):
 
     class Meta:
         model = ModelStarship
-        interfaces = (Node,)
+        interfaces = (graphene.Node,)
         connection_field_factory = ConnectionFilter.factory
         model = ModelStarship
         
@@ -148,15 +148,6 @@ class Query(graphene.ObjectType):
     
     def resolve_viewer(self, info):
         return self
-    
-    hero = graphene.Field(
-        graphene.List(PeopleNode),
-        required=True,
-        episode=graphene.Int(required=True)
-    )
-
-    def resolve_hero(root, info, episode):
-        return PeopleNode.get_query(info).all()
         
 
     
