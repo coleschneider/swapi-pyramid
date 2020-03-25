@@ -40,13 +40,13 @@ def get_tm_session(session_factory, transaction_manager):
           engine = get_engine(settings)
           session_factory = get_session_factory(engine)
           with transaction.manager:
-              dbsession = get_tm_session(session_factory, transaction.manager)
+              db_session = get_tm_session(session_factory, transaction.manager)
     """
-    dbsession = session_factory()
-    # Base.query = dbsession.query_property()  # Used by graphql to execute queries
+    db_session = session_factory()
+    # Base.query = db_session.query_property()  # Used by graphql to execute queries
     zope.sqlalchemy.register(
-        dbsession, transaction_manager=transaction_manager)
-    return dbsession
+        db_session, transaction_manager=transaction_manager)
+    return db_session
 
 
 def includeme(config):
@@ -64,12 +64,12 @@ def includeme(config):
     config.include('pyramid_retry')
     engine = get_engine(settings)
     session_factory = get_session_factory(engine)
-    config.registry['dbsession_factory'] = session_factory
+    config.registry['db_session_factory'] = session_factory
 
-    # make request.dbsession available for use in Pyramid
+    # make request.db_session available for use in Pyramid
     config.add_request_method(
         # r.tm is the transaction manager used by pyramid_tm
         lambda r: get_tm_session(session_factory, r.tm),
-        'dbsession',
+        'db_session',
         reify=True
     )

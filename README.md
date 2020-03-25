@@ -36,4 +36,18 @@ $ENV/bin/initialize_db development.ini
 $ENV/bin/pserve development.ini --reload
 ```
 
-Open your browser and visit [localhost:6543/graphql](http://localhost:6543/graphql/)!
+Visit [localhost:6543/graphql](http://localhost:6543/graphql/)
+
+
+## Testing
+
+
+```bash
+
+# Run tests with logging enabled
+$ENV/bin/py.test ./starwars/tests/tests.py -s
+
+# Run tests and update snapshots
+$ENV/bin/py.test ./starwars/tests/tests.py -s --snapshot-update
+
+```

@@ -1,7 +1,5 @@
 import graphene
-from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 
-from pyramid_sqlalchemy import Session
 from starwars.models import (
     ModelFilm, ModelPeople, ModelPlanet,
     ModelSpecies, ModelVehicle, ModelStarship,
@@ -12,7 +10,7 @@ import graphene
 from graphene import relay
 from graphene_sqlalchemy_filter import FilterableConnectionField, FilterSet
 
-from graphene_sqlalchemy import SQLAlchemyConnectionField, SQLAlchemyObjectType
+from graphene_sqlalchemy import  SQLAlchemyObjectType
 from .filters import ConnectionFilter
 
 
@@ -147,9 +145,21 @@ class Query(graphene.ObjectType):
     specie = relay.Node.Field(SpecieNode)
     vehicle = relay.Node.Field(VehicleNode)
     viewer = graphene.Field(lambda: Query)
-
+    
     def resolve_viewer(self, info):
         return self
+    
+    hero = graphene.Field(
+        graphene.List(PeopleNode),
+        required=True,
+        episode=graphene.Int(required=True)
+    )
+
+    def resolve_hero(root, info, episode):
+        return PeopleNode.get_query(info).all()
+        
+
+    
 
 
 schema = graphene.Schema(query=Query)

@@ -10,7 +10,7 @@ from starwars.schema import schema
     # In summary, don't use the renderer='json' here :)
 )
 def graphql_view(request):
-    context = {'session': request.dbsession}
+    context = {'session': request.db_session}
     return serve_graphql_request(request, schema, context_value=context)
 
     # Optional, for adding batch query support (used in Apollo-Client)
