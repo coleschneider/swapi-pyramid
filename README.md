@@ -36,7 +36,7 @@ $ENV/bin/initialize_db development.ini
 $ENV/bin/pserve development.ini --reload
 ```
 
-Visit [localhost:6543/graphql](http://localhost:6543/graphql/)
+Visit [localhost:6543/graphql](http://localhost:6543/graphql)
 
 
 ## Testing
