@@ -1,40 +1,3 @@
-# from sqlalchemy import Table, Column, Integer, ForeignKey, String, Text
-# from sqlalchemy.orm import relationship
-
-# from uuid import uuid4
-# from pyramid_sqlalchemy import BaseObject
-# from sqlalchemy.dialects.postgresql import UUID
-
-
-# class PlanetModel(BaseObject):
-#     "A Planet"
-#     __tablename__='planet'
-#     id = Column(Text, primary_key=True)
-#     name = Column(Text)
-#     rotation_period = Column(Text)
-#     diameter = Column(Text)
-#     climate = Column(Text)
-#     gravity = Column(Text)
-#     terrain = Column(Text)
-#     surface_water = Column(Text)
-#     population = Column(Text)
-#     people = relationship('PeopleModel', uselist=False, backref='planet')
-    
-
-# class PeopleModel(BaseObject):
-#     __tablename__='people'
-#     id = Column(Text, primary_key=True)
-
-#     name = Column(String(length=100))
-#     height = Column(String(length=10), nullable=False)
-#     mass = Column(String(length=10), nullable=False)
-#     hair_color = Column(String(length=20), nullable=False)
-#     skin_color = Column(String(length=20), nullable=False)
-#     eye_color = Column(String(length=20), nullable=False)
-#     birth_year = Column(String(length=10), nullable=False)
-#     gender = Column(String(length=40), nullable=False)
-#     homeworld_id = Column(Text, ForeignKey('planet.id'))
-#     homeworld = relationship('PlanetModel', back_populates='people')
 from sqlalchemy import Column, Table, Integer, String, ForeignKey
 from sqlalchemy.orm import backref, relationship
 
@@ -106,15 +69,15 @@ class ModelFilm(Base):
     edited = Column('edited', String)
 
     character_list = relationship('ModelPeople', secondary=character_map,
-                                  backref=backref('film_list', lazy='dynamic'))
+                                  backref='film_list')
     planet_list = relationship('ModelPlanet', secondary=planet_map,
-                               backref=backref('film_list', lazy='dynamic'))
+                               backref='film_list')
     vehicle_list = relationship('ModelVehicle', secondary=vehicle_map,
-                                backref=backref('film_list', lazy='dynamic'))
+                                backref='film_list')
     starship_list = relationship('ModelStarship', secondary=starship_map,
-                                 backref=backref('film_list', lazy='dynamic'))
+                                 backref='film_list')
     species_list = relationship('ModelSpecies', secondary=species_map,
-                                backref=backref('film_list', lazy='dynamic'))
+                                backref='film_list')
 
 
 class ModelPeople(Base):
@@ -137,11 +100,11 @@ class ModelPeople(Base):
     edited = Column('edited', String)
 
     species_list = relationship('ModelSpecies', secondary=peep_species_map,
-                                backref=backref('people_list', lazy='dynamic'))
+                                backref='people_list')
     vehicle_list = relationship('ModelVehicle', secondary=peep_vehicle_map,
-                                backref=backref('pilot_list', lazy='dynamic'))
+                                backref='pilot_list')
     starship_list = relationship('ModelStarship', secondary=peep_starship_map,
-                                 backref=backref('pilot_list', lazy='dynamic'))
+                                 backref='pilot_list')
 
 
 class ModelSpecies(Base):
@@ -184,8 +147,8 @@ class ModelPlanet(Base):
     created = Column('created', String)
     edited = Column('edited', String)
 
-    resident_list = relationship(ModelPeople, backref='planet')
-    species_list = relationship(ModelSpecies, backref='planet')
+    resident_list = relationship(ModelPeople, backref='planet',)
+    species_list = relationship(ModelSpecies, backref='planet',)
 
 
 class ModelTransport:
